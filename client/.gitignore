@@ -1,0 +1,13 @@
+node_modules
+.env
+dist
+build
+logs
+*.log
+coverage
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+    

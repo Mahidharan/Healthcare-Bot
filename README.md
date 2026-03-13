@@ -59,6 +59,14 @@ MONGODB_URI=mongodb://localhost:27017/healthcare_chatbot
 GROQ_API_KEY=your_groq_api_key_here
 GROQ_API_URL=https://api.groq.com/openai/v1/chat/completions
 GROQ_MODEL=llama-3.3-70b-versatile
+CORS_ORIGIN=http://localhost:3000
+```
+
+For frontend environment variables, create `client/.env` (or configure these in your frontend hosting provider):
+
+```
+VITE_API_BASE_URL=http://localhost:5000/api
+VITE_DEV_API_PROXY_TARGET=http://localhost:5000
 ```
 
 ### Running
@@ -74,6 +82,22 @@ npm run dev
 ```
 
 The app will be available at `http://localhost:3000`.
+
+## Deployment Notes (Frontend + Backend)
+
+- Backend env (`server/.env` in production):
+  - `MONGODB_URI`
+  - `GROQ_API_KEY`
+  - `GROQ_API_URL` (optional)
+  - `GROQ_MODEL` (optional)
+  - `CORS_ORIGIN=https://your-frontend-domain.com`
+  - If you have multiple frontend domains, separate them with commas.
+
+- Frontend env (hosting provider env vars):
+  - `VITE_API_BASE_URL=https://your-backend-domain.com/api`
+
+- Local development:
+  - Keep `VITE_API_BASE_URL=/api` (or unset it) and use Vite proxy.
 
 ## Pages
 

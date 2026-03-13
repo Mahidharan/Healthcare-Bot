@@ -92,9 +92,11 @@ The app will be available at `http://localhost:3000`.
   - `GROQ_MODEL` (optional)
   - `CORS_ORIGIN=https://your-frontend-domain.com`
   - If you have multiple frontend domains, separate them with commas.
+  - Wildcards are supported, e.g. `https://*.vercel.app`.
 
 - Frontend env (hosting provider env vars):
   - `VITE_API_BASE_URL=https://your-backend-domain.com/api`
+  - If omitted, frontend falls back to `https://healthcare-bot-1-dfyx.onrender.com/api` in production.
 
 - Local development:
   - Keep `VITE_API_BASE_URL=/api` (or unset it) and use Vite proxy.

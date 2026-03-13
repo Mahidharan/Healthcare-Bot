@@ -1,9 +1,13 @@
 import axios from "axios";
 
-const rawBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim() || "/api";
-const API_BASE_URL = rawBaseUrl.endsWith("/")
-  ? rawBaseUrl.slice(0, -1)
-  : rawBaseUrl;
+const PROD_FALLBACK_API_BASE_URL =
+  "https://healthcare-bot-1-dfyx.onrender.com/api";
+
+const rawBaseUrl =
+  import.meta.env.VITE_API_BASE_URL?.trim() ||
+  (import.meta.env.DEV ? "/api" : PROD_FALLBACK_API_BASE_URL);
+
+const API_BASE_URL = rawBaseUrl.replace(/\/+$/, "");
 
 const API = axios.create({
   baseURL: API_BASE_URL,

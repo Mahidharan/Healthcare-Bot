@@ -15,6 +15,18 @@ const allowedOrigins = (process.env.CORS_ORIGIN || "")
   .map((origin) => origin.trim())
   .filter(Boolean);
 
+const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const wildcardOriginRegexes = allowedOrigins
+  .filter((origin) => origin.includes("*"))
+  .map((origin) => {
+    const pattern = `^${origin.split("*").map(escapeRegex).join(".*")}$`;
+    return new RegExp(pattern);
+  });
+
+const exactAllowedOrigins = allowedOrigins.filter(
+  (origin) => !origin.includes("*"),
+);
+
 const corsOptions = {
   origin: (origin, callback) => {
     // Allow non-browser tools and same-origin requests with no Origin header.
@@ -22,7 +34,16 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+    const isAllowedByExact = exactAllowedOrigins.includes(origin);
+    const isAllowedByWildcard = wildcardOriginRegexes.some((regex) =>
+      regex.test(origin),
+    );
+
+    if (
+      allowedOrigins.length === 0 ||
+      isAllowedByExact ||
+      isAllowedByWildcard
+    ) {
       return callback(null, true);
     }
 

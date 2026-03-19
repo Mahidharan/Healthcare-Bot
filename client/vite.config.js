@@ -4,8 +4,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const devProxyTarget =
-    env.VITE_DEV_API_PROXY_TARGET ||
-    "https://healthcare-bot-1-dfyx.onrender.com";
+    env.VITE_DEV_API_PROXY_TARGET || "http://localhost:5000";
 
   return {
     plugins: [react()],
